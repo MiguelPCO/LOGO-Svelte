@@ -33,7 +33,6 @@
 				price: product.price
 			}
 		];
-		console.log('Carrito actualizado:', cart);
 	}
 </script>
 <main class="container mx-auto p-4">
@@ -53,4 +52,20 @@
 		</div>
 	</section>
 
+    <section>
+		<h2 class="text-xl font-semibold mb-4">Ticket</h2>
+		{#if cart.length === 0}
+			<p class="text-gray-500">El carrito está vacío</p>
+		{:else}
+			<ul class="space-y-2">
+				{#each cart as item (item.id)}
+					<li class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
+						<span class="font-medium">
+							{item.name} - €{item.price.toFixed(2)}
+						</span>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+	</section>
 </main>
