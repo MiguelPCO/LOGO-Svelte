@@ -11,6 +11,7 @@
 		productId: number;
 		name: string;
 		price: number;
+		quantity: number;
 	};
 
 	const PRODUCTS: Product[] = [
@@ -22,24 +23,50 @@
 	];
 
 	let cart: CartItem[] = [];
-	let nextCartItemId = 1;
+
+    let quantities: Record<number, number> = {};
+
+    PRODUCTS.forEach((product) => {
+		quantities[product.id] = 1;
+	});
+
+    $: total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
 	function addToCart(product: Product): void {
-		cart = [
-			...cart,
-			{
-				id: nextCartItemId++,
-				productId: product.id,
-				name: product.name,
-				price: product.price
-			}
-		];
-	}
+		const quantity = quantities[product.id];
+		const existingItem = cart.find((item) => item.productId === product.id);
 
-	$: total = cart.reduce((sum, item) => sum + item.price, 0);
+		if (existingItem) {
+			cart = cart.map((item) =>
+				item.productId === product.id
+					? { ...item, quantity: item.quantity + quantity }
+					: item
+			);
+		} else {
+			cart = [
+				...cart,
+				{
+					id: Date.now(),
+					productId: product.id,
+					name: product.name,
+					price: product.price,
+					quantity: quantity
+				}
+			];
+		}
+		quantities[product.id] = 1;
+	}
 
 	function removeFromCart(itemId: number): void {
 		cart = cart.filter((item) => item.id !== itemId);
+	}
+
+    function incrementQuantity(productId: number): void {
+		quantities[productId] = Math.min(quantities[productId] + 1, 99);
+	}
+
+	function decrementQuantity(productId: number): void {
+		quantities[productId] = Math.max(quantities[productId] - 1, 1);
 	}
 </script>
 
@@ -75,12 +102,14 @@
 										role="group"
 									>
 										<button
+											on:click={() => decrementQuantity(product.id)}
 											class="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-400 font-bold text-white transition hover:bg-orange-500"
 										>
 											−
 										</button>
-										<output class="w-8 text-center font-semibold" aria-live="polite"> </output>
+										<output class="w-8 text-center font-semibold"> {quantities[product.id]}</output>
 										<button
+											on:click={() => incrementQuantity(product.id)}
 											class="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-400 font-bold text-white transition hover:bg-orange-500"
 										>
 											+
@@ -102,7 +131,7 @@
 		</section>
 
 		<aside class="lg:col-span-1">
-			<div class="sticky top-4 rounded-lg bg-white p-6 shadow-md">
+			<div class="sticky top-4 rounded-lg border bg-white p-6 shadow-md">
 				<h2 class="mb-4 text-2xl font-semibold">Ticket</h2>
 
 				{#if cart.length === 0}
@@ -114,7 +143,7 @@
 								<div class="flex-1">
 									<p class="font-medium">{item.name}</p>
 									<p class="text-sm text-gray-600">
-										{item.price.toFixed(2)}€
+									    {item.price.toFixed(2)}€
 									</p>
 									<p class="mt-1 text-sm font-semibold text-green-600">
 										{item.price.toFixed(2)}€
