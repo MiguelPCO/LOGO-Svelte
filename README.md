@@ -1,38 +1,29 @@
-# sv
+# LOGO - Frontend Developer Assessment
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+## 🎯 Descripción
 
-## Creating a project
+Solución a los ejercicios técnicos.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Tips
 
-```sh
-# create a new project in the current directory
-npx sv create
+- Cada ejercicio corresponde a un nuevo directorio y repositorio de git independiente.
+- Se evaluará acorde con lo que se describe aquí.
+- Lee todo con concentración. Toda la información que necesitas está vinculada aquí, por lo que evita buscar otros tutoriales.
+- **NO USES LLMS PARA ESTA PRUEBA**. Esta prueba no se trata de velocidad, sino de las preguntas que se realizarán después de la prueba. Tómate todo el tiempo necesario para programarlo a mano.
+- Haz un commit por paso completado (que equivale a una feature). No se aceptarán commits con varios features, pero puedes tener tantos commit de 'fix' como quieras. No sobreescribas la historia de git.
+- El resultado ha de ser un link a un repositorio de git público.
+- Los ejercicios dependen el uno del otro, por lo que ejecútalos en orden.
 
-# create a new project in my-app
-npx sv create my-app
-```
+## 📋 Ejercicios
 
-## Developing
+### Ejercicio 1: Setup
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- Tutorial Svelte completo (Basic Svelte + Basic SvelteKit)
+- Proyecto SvelteKit inicializado (TypeScript + Tailwind)
 
-```sh
-npm run dev
+### Ejercicio 2: MVP Frutería
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- 5 productos con botones de compra
+- Sistema de carrito funcional
+- Cálculo automático del total
+- liminación individual de items
