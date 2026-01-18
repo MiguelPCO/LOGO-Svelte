@@ -36,6 +36,10 @@
 	}
 
     $: total = cart.reduce((sum, item) => sum + item.price, 0);
+
+    function removeFromCart(itemId: number): void {
+		cart = cart.filter((item) => item.id !== itemId);
+	}
 </script>
 <main class="container mx-auto p-4">
 	<h1 class="text-2xl font-bold mb-6">Frutería</h1>
@@ -65,6 +69,12 @@
 						<span class="font-medium">
 							{item.name} - €{item.price.toFixed(2)}
 						</span>
+                        <button
+							class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-700 transition"
+							on:click={() => removeFromCart(item.id)}
+						>
+							Eliminar
+						</button>
 					</li>
 				{/each}
 			</ul>
