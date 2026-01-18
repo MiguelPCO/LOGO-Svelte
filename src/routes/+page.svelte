@@ -58,8 +58,19 @@
 	}
 
 	function removeFromCart(itemId: number): void {
-		cart = cart.filter((item) => item.id !== itemId);
-	}
+	cart = cart
+		.map((item) => {
+			if (item.id === itemId) {
+				if (item.quantity > 1) {
+					return { ...item, quantity: item.quantity - 1 };
+				}
+				return null;
+			}
+			return item;
+		})
+		.filter((item) => item !== null) as CartItem[];
+}
+
 
     function incrementQuantity(productId: number): void {
 		quantities[productId] = Math.min(quantities[productId] + 1, 99);
@@ -164,7 +175,7 @@
 						<div class="flex items-center justify-between">
 							<span class="text-xl font-bold">Total:</span>
 							<output class="text-3xl font-bold text-green-600" aria-live="polite">
-								{total.toFixed(2)} €
+								{total.toFixed(2)}€
 							</output>
 						</div>
 					</footer>
