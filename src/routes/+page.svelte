@@ -143,10 +143,10 @@
 								<div class="flex-1">
 									<p class="font-medium">{item.name}</p>
 									<p class="text-sm text-gray-600">
-									    {item.price.toFixed(2)}€
+									    {item.quantity} ud. × {item.price.toFixed(2)}€
 									</p>
 									<p class="mt-1 text-sm font-semibold text-green-600">
-										{item.price.toFixed(2)}€
+                                        {(item.price * item.quantity).toFixed(2)}€
 									</p>
 								</div>
 								<button
