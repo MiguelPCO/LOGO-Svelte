@@ -34,6 +34,8 @@
 			}
 		];
 	}
+
+    $: total = cart.reduce((sum, item) => sum + item.price, 0);
 </script>
 <main class="container mx-auto p-4">
 	<h1 class="text-2xl font-bold mb-6">Frutería</h1>
@@ -66,6 +68,11 @@
 					</li>
 				{/each}
 			</ul>
+            <div class="pt-4 border-t-2 border-gray-300">
+				<p class="text-2xl font-bold">
+					Total: €{total.toFixed(2)}
+				</p>
+			</div>
 		{/if}
 	</section>
 </main>
